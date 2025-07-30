@@ -1,22 +1,21 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated style="background-color: #00204a">
+
       <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
+        <img src="/public/icons/logomarca.png" alt="ConectiFy" style="height: 50px" />
+        
+        <q-toolbar-title>{{isAuthenticated ? user.email : 'ConectiFy - Chat App'}}</q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>
+          <q-btn color="negative" v-if="isAuthenticated" @click="sair">
+            Sair
+          </q-btn>
+        </div>
+
       </q-toolbar>
     </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
-      </q-list>
-    </q-drawer>
 
     <q-page-container>
       <router-view />
@@ -24,58 +23,35 @@
   </q-layout>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+<script>
+import {useAuth} from '@vueuse/firebase'
+import { auth, db } from 'boot/firebase';
+import { doc, updateDoc} from 'firebase/firestore';
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
-  },
-]
+export default{
+  name: "MainLayout",
 
-const leftDrawerOpen = ref(false)
+  components: {},
 
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+  setup(){
+    const {isAuthenticated , user} = useAuth(auth);
+    const sair = async() => {
+      try {
+        await updateDoc(doc(db, 'usuarios', user.value.uid), {
+          estado: false
+      });
+        await auth.signOut();
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    return{
+      isAuthenticated,
+      user,
+      sair,
+      db,
+    }
+  }
 }
 </script>
