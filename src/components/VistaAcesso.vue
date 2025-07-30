@@ -94,12 +94,13 @@ html, body {
 }
 
 .quadrado {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  min-height: 90vh;
-  max-height: 90vh;
-  box-sizing: border-box;
+display: flex;
+flex-wrap: wrap;
+width: 100%;
+min-height: 90vh;
+max-height: 90vh;
+box-sizing: border-box;
+box-shadow: 0 3px 10px rgba(0,0,0,0.1); 
 }
 
 .lado-esquerdo {
