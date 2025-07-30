@@ -1,7 +1,7 @@
 <template>
     <div class="quadrado">
         <div class="lado-esquerdo text-white">
-            <img src="/public/icons/logo.png" size: height="400px"  width="450px"/>
+            <img src="/icons/logo.png" size: height="400px"  width="450px"/>
         </div>
         <div class="lado-direito">
             <div class="container" elevated>

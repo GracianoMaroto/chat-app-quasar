@@ -4,7 +4,7 @@
 
       <q-toolbar>
 
-        <img src="/public/icons/logomarca.png" alt="ConectiFy" style="height: 50px" />
+        <img src="/icons/logomarca.png" alt="ConectiFy" style="height: 50px" />
         
         <q-toolbar-title>{{isAuthenticated ? user.email : 'ConectiFy - Chat App'}}</q-toolbar-title>
 
