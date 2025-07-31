@@ -1,3 +1,3 @@
 # CONECTIFY CHAT APP COM QUASAR
 
-https://chat-app-quasar.netlify.app/
+https://conectify-chat.netlify.app/
