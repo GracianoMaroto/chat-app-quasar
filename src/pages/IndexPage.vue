@@ -1,45 +1,66 @@
 <template>
-  <q-page padding>
-    
-    <VistaAcesso v-if="!isAuthenticated"/>
+  <q-page padding style="height: 100vh; display: flex;">
 
-    <div v-else>
-      <VistaUsuariosAtivos/>
-      <VistaChat/>
-    </div>
+    <!-- Se não autenticado: ocupa toda tela -->
+    <VistaAcesso v-if="!isAuthenticated" style="flex: 1" />
 
+    <!-- Se autenticado -->
+    <template v-else>
+      <!-- Sidebar lateral -->
+      <aside
+        style="
+          width: 300px;
+          height: 100vh;
+          border-right: 1px solid #ccc;
+          overflow-y: auto;
+          background-color: #f5f5f5;
+        "
+      >
+        <VistaUsuariosAtivos />
+      </aside>
 
+      <!-- Área do chat (flex column) -->
+      <section
+        style="
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+          background-color: white;
+        "
+      >
+        <!-- Lista de mensagens scrollável -->
+        <div
+          style="
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-bottom: 80px; /* evita esconder mensagens atrás do footer */
+          "
+        >
+          <VistaChatSemFooter />
+        </div>
+
+        <!-- Footer aparece só se uidSelecionado preenchido -->
+        <div v-if="uidSelecionado !== ''" style="border-top: 1px solid #ccc;">
+          <ChatFooter />
+        </div>
+      </section>
+    </template>
   </q-page>
-
-
 </template>
 
-
-
-
-
-<script>
-import VistaAcesso from 'src/components/VistaAcesso.vue';
-import {useAuth} from '@vueuse/firebase'
+<script setup>
+import { ref, provide } from 'vue';
+import { useAuth } from '@vueuse/firebase';
 import { auth } from 'src/boot/firebase';
+
+import VistaAcesso from 'src/components/VistaAcesso.vue';
 import VistaUsuariosAtivos from 'src/components/VistaUsuariosAtivos.vue';
-import VistaChat from 'src/components/VistaChat.vue';
-import { provide , ref} from 'vue';
+import VistaChatSemFooter from 'src/components/VistaChatSemFooter.vue';
+import ChatFooter from 'src/components/ChatFooter.vue';
 
-
-export default{
-  components: {VistaAcesso , VistaUsuariosAtivos , VistaChat},
-  setup(){
-    const {user, isAuthenticated} = useAuth(auth);
-    const uidSelecionado = ref('')
-    provide('uidSelecionado' , uidSelecionado)
-
-    return{
-      isAuthenticated,
-      user
-    }
-  }
-};
-
-
+const { isAuthenticated } = useAuth(auth);
+const uidSelecionado = ref('');
+provide('uidSelecionado', uidSelecionado);
 </script>

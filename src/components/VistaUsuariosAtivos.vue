@@ -1,20 +1,31 @@
 <template>
-    <q-page-sticky position="top" expand class="tabs-zindex">
-        <q-tabs
-        v-model="uidSelecionado"
-        inline-label
-        outside-arrows
-        mobile-arrows
-        class="bg-primary text-white shadow-2 full-width"
-        >
-        <q-tab 
-        v-for="user in arraySemUser" :key="user.uid"
-        :name="user.uid" icon="account_circle" :label="user.email"
-        :class="user.estado ? 'text-white' : 'text-grey'"
-        />
-      </q-tabs>
-    </q-page-sticky>
+  <q-list 
+  bordered 
+  separator
+  style="max-height: 100%; overflow-y: auto;"
+  >
+    <q-item-label header class="text-grey-8 q-pa-sm">Usuários ativos</q-item-label>
 
+    <q-item
+      v-for="user in arraySemUser"
+      :key="user.uid"
+      clickable
+      @click="uidSelecionado = user.uid"
+      :active="uidSelecionado === user.uid"
+      active-class="bg-primary text-white"
+    >
+      <q-item-section avatar>
+        <q-avatar color="primary" text-color="white">
+          {{ user.email.charAt(0).toUpperCase() }}
+        </q-avatar>
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>{{ user.email }}</q-item-label>
+        <q-item-label caption>{{ user.estado ? 'Online' : 'Offline' }}</q-item-label>
+      </q-item-section>
+    </q-item>
+  </q-list>
 
 </template>
 
@@ -59,8 +70,18 @@ const uidSelecionado = inject('uidSelecionado');
 </script>
 
 <style scoped>
-.tabs-zindex{
-    z-index: 2000;
+.q-list {
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+:root, html, body, #q-app {
+  height: 100%;
+  margin: 0;
+}
+
+.q-page {
+  height: 100%;
 }
 
 </style>

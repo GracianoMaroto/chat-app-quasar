@@ -35,17 +35,19 @@ export default{
 
   setup(){
     const {isAuthenticated , user} = useAuth(auth);
-    const sair = async() => {
+    const sair = async () => {
       try {
-        await updateDoc(doc(db, 'usuarios', user.value.uid), {
-          estado: false
-      });
+        if (user.value && user.value.uid) {
+          await updateDoc(doc(db, 'usuarios', user.value.uid), {
+            estado: false
+          });
+        }
         await auth.signOut();
 
       } catch (error) {
-        console.log(error)
+        console.error("Erro ao sair:", error);
       }
-    }
+    };
     return{
       isAuthenticated,
       user,
