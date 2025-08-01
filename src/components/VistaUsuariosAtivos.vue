@@ -4,13 +4,13 @@
   separator
   style="max-height: 100%; overflow-y: auto;"
   >
-    <q-item-label header class="text-grey-8 q-pa-sm">Usuários ativos</q-item-label>
+    <q-item-label header class="text-green-8 q-pa-sm">Usuários ativos</q-item-label>
 
     <q-item
       v-for="user in arraySemUser"
       :key="user.uid"
       clickable
-      @click="uidSelecionado = user.uid"
+      @click="uidSelecionado = user.uid;"
       :active="uidSelecionado === user.uid"
       active-class="bg-primary text-white"
     >
@@ -66,6 +66,8 @@ const arraySemUser = computed(() => {
 const users = ref([]);
 
 const uidSelecionado = inject('uidSelecionado');
+// const sidebarAberta = inject('sidebarAberta');
+
 
 </script>
 

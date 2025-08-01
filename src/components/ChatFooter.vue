@@ -1,5 +1,5 @@
 <template>
-  <q-footer class="bg-white" height-hint="60" style="padding: 4px 12px;">
+  <div class="bg-white" style="padding: 4px 12px;">
     <q-form @submit.prevent="enviarMensagem">
       <q-toolbar class="bg-primary text-white row q-pa-xs" style="gap: 8px;">
         
@@ -34,7 +34,7 @@
         <q-btn round flat icon="send" type="submit" />
       </q-toolbar>
     </q-form>
-  </q-footer>
+  </div>
 </template>
 
 <script setup>

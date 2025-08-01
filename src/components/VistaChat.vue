@@ -1,6 +1,11 @@
 <template>
-  <div v-if="uidSelecionado !== ''" ref="RefChat" class="chat-messages-container">
-    <div class="q-pa-md row justify-center">
+  <div class="chat-messages-container" ref="RefChat"> 
+
+    <div v-if="uidSelecionado !== ''" class="q-pa-md row justify-center">
+      
+      <div class="voltarbutton"> 
+        <q-btn round flat icon="send" />
+      </div>
       <div style="width: 100%; max-width: 600px">
         <q-chat-message
           v-for="chat in chats"
@@ -11,9 +16,10 @@
         />
       </div>
     </div>
-  </div>
-  <div v-else class="q-mt-xl">
-    <h5 class="q-mt-xl">Selecione um usuário para conversar.</h5>
+    <div v-else class="q-mt-xl text-center" id="texto-principal">
+      <h3>ConectiFy - Chat APP</h3>
+      <h6>Por favor, selecione um usuário para conversar!</h6>
+    </div>
   </div>
 </template>
 
@@ -71,5 +77,15 @@ function carregarMensagens(uidSelecionadoValue) {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+}
+
+.voltarbutton{
+  position: fixed;
+  align-self: top;
+  margin-right: 1500px;
+}
+
+#texto-principal{
+  color: #00204a;
 }
 </style>

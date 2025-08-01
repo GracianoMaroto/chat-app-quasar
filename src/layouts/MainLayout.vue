@@ -10,7 +10,7 @@
 
         <div>
           <q-btn color="negative" v-if="isAuthenticated" @click="sair">
-            Sair
+            Log out
           </q-btn>
         </div>
 
