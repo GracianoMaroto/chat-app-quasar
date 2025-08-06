@@ -10,7 +10,20 @@
                     <h4>{{acessar ? 'Login into your account' : 'Sign Up to your account'}}</h4>
                     <q-form class="q-gutter-md" @submit.prevent="processarFormulario">
                         <q-input v-if="!acessar" label="Name"/>
-                        <q-input v-if="!acessar" label="Date of birth" type="date"/>
+                                    <q-input v-if="!acessar" filled v-model="date" mask="##/##/####">
+                                    <template v-slot:append>
+                                        <q-icon name="event" class="cursor-pointer">
+                                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                                            <q-date v-model="date" mask="DD/MM/YYYY">
+                                            <div class="row items-center justify-end">
+                                                <q-btn v-close-popup label="Close" color="negative" flat />
+                                            </div>
+                                            </q-date>
+                                        </q-popup-proxy>
+                                        </q-icon>
+                                    </template>
+                                    </q-input>
+                                
                         <q-input label="Email" v-model="email"/>
                         <q-input label="Password" v-model="password" type="password"/>
                         <q-btn :label="acessar ? 'Login' : 'Cadastrar'" type="submit" color="primary"/>
@@ -35,6 +48,7 @@ import { /*getFirestore ,*/ doc, setDoc, updateDoc } from 'firebase/firestore';
 const email = ref('');
 const password = ref('');
 const acessar = ref(true);
+const date = ref('');
 const auth = getAuth();
 const {isAuthenticated , user} = useAuth(auth);
 console.log(isAuthenticated , user)
