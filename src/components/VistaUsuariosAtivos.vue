@@ -12,7 +12,7 @@
       clickable
       @click="uidSelecionado = user.uid;"
       :active="uidSelecionado === user.uid"
-      active-class="bg-primary text-white"
+      active-class= "bg-primary text-white"
     >
       <q-item-section avatar>
         <q-avatar color="primary" text-color="white">
